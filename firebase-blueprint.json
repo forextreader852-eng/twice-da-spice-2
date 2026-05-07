@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "MenuItem": {
+      "title": "MenuItem",
+      "description": "A food item in the restaurant menu",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Name of the dish" },
+        "description": { "type": "string", "description": "Brief description" },
+        "price": { "type": "number", "description": "Price in PKR" },
+        "category": { "type": "string", "enum": ["BBQ", "Fast Food", "Chinese", "Desi", "Drinks"] },
+        "image": { "type": "string", "description": "URL of the image" },
+        "isAvailable": { "type": "boolean", "description": "Availability status" }
+      },
+      "required": ["name", "price", "category", "isAvailable"]
+    },
+    "CartItem": {
+      "title": "CartItem",
+      "description": "A menu item added to a cart with quantity",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "price": { "type": "number" },
+        "category": { "type": "string" },
+        "image": { "type": "string" },
+        "quantity": { "type": "number" }
+      },
+      "required": ["id", "name", "price", "quantity"]
+    },
+    "Order": {
+      "title": "Order",
+      "description": "A customer food order",
+      "type": "object",
+      "properties": {
+        "customerName": { "type": "string" },
+        "phone": { "type": "string", "description": "+92 format" },
+        "address": { "type": "string" },
+        "items": { 
+          "type": "array",
+          "items": { "$ref": "#/entities/CartItem" }
+        },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string", "enum": ["pending", "preparing", "delivered", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Firestore serverTimestamp" },
+        "orderId": { "type": "string", "description": "Friendly order reference like TS-XXXXXX" }
+      },
+      "required": ["customerName", "phone", "address", "items", "totalAmount", "status", "createdAt", "orderId"]
+    },
+    "Admin": {
+      "title": "Admin",
+      "description": "System administrator user",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string" }
+      },
+      "required": ["email"]
+    }
+  },
+  "firestore": {
+    "/menu/{menuId}": {
+      "schema": "MenuItem",
+      "description": "Collection of available food items"
+    },
+    "/orders/{orderId}": {
+      "schema": "Order",
+      "description": "Collection of customer orders"
+    },
+    "/admins/{adminId}": {
+      "schema": "Admin",
+      "description": "Collection of authorized admin UIDs"
+    }
+  }
+}

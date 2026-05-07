@@ -1,0 +1,12 @@
+{
+  "name": "Twice Da Spice",
+  "description": "Premium Pakistani restaurant in Lahore offering BBQ, Desi, Chinese, and Fast Food with real-time online ordering and AI-powered assistance.",
+  "requestFramePermissions": [
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "AI Chatbot",
+    "Online Ordering",
+    "Admin Dashboard"
+  ]
+}
